@@ -32,10 +32,10 @@
                     </div>
                     <div class="form-group">
                         <label for="inputMessage">Message</label>
-                        <textarea class="form-control" id="inputMessage" name="message" rows="3">Message</textarea>
+                        <textarea class="form-control" id="inputMessage" name="message" rows="3"></textarea>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                        <button id="submitBtn" type="submit" class="btn btn-primary btn-block">Send</button>
                     </div>
                 </form>
             </div>

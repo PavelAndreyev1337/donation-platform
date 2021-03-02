@@ -3,7 +3,7 @@ $(() => {
 
     let rows = [];
     let donationForm = $("#donationForm")
-
+    
     donationForm.on("submit", event => {
         event.preventDefault()
         event.stopPropagation()
@@ -21,7 +21,7 @@ $(() => {
                 amount: $("#inputAmount").val(),
                 message: $("#inputMessage").val(),
             }
-        }).done( data => {
+        }).done(() => {
             $("#donationModal").modal("hide");
         })
     })

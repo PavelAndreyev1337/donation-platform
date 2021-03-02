@@ -1,3 +1,5 @@
-<x-layout>
-    <x-forms.modal/>
-</x-layout>
+@extends('layouts.master')
+
+@section('content')
+    @include('modal')
+@endsection
