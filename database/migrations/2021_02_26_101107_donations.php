@@ -13,11 +13,12 @@ class Donations extends Migration
      */
     public function up()
     {
-        Schema::create("donations", function(Blueprint $table){
+        Schema::create("donations", function (Blueprint $table) {
             $table->id();
             $table->string("name");
             $table->string("email");
-            $table->string("message");
+            $table->string("amount");
+            $table->string("message")->nullable();
             $table->timestamps();
         });
     }

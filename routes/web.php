@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\DonationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/", function () {
+    return view("index");
+});
+
+Route::group(["prefix" => "/api/v1"], function () {
+    Route::resource("/donations", DonationController::class)->only([
+        "index", "store"
+    ]);
 });
