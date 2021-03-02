@@ -2,4 +2,5 @@
 
 @section('content')
     @include('modal')
+    @include('table')
 @endsection

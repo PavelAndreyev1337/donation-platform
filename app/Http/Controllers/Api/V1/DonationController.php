@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDonationRequest;
+use App\Http\Resources\DonationCollection;
 use App\Http\Resources\DonationResource;
 use App\Models\Donation;
 use Illuminate\Http\Request;
@@ -13,11 +14,11 @@ class DonationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return App\Http\Resources\DonationCollection
      */
     public function index()
     {
-        //
+        return new DonationCollection(Donation::orderByDesc('amount')->paginate(10));
     }
 
     /**
@@ -49,6 +50,7 @@ class DonationController extends Controller
      */
     public function show($id)
     {
+        //
     }
 
     /**
