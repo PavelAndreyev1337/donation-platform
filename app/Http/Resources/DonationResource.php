@@ -17,7 +17,9 @@ class DonationResource extends JsonResource
         return [
             "name" => $this->name,
             "email" => $this->email,
-            "message" => $this->message
+            "amount" => $this->amount,
+            "message" => $this->message,
+            "created_at" => $this->created_at
         ];
     }
 }

@@ -1,0 +1,1 @@
+<nav id="donationsPaginator" class="d-flex justify-content-center"></nav>
