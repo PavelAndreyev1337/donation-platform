@@ -21,11 +21,14 @@ class DonationFactory extends Factory
      */
     public function definition()
     {
+        $date = $this->faker->dateTimeBetween('-20 days', '+20 days');
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->safeEmail,
             'amount' => rand(0, 100),
-            'message' => $this->faker->sentence(5)
+            'message' => $this->faker->sentence(5),
+            'created_at' => $date,
+            'updated_at' => $date
         ];
     }
 }
