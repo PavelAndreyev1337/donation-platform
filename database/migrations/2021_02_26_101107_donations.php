@@ -17,7 +17,7 @@ class Donations extends Migration
             $table->id();
             $table->string("name");
             $table->string("email");
-            $table->string("amount");
+            $table->double("amount");
             $table->string("message")->nullable();
             $table->timestamps();
         });
