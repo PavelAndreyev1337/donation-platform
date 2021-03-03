@@ -2,7 +2,7 @@
 
 @section('content')
     @include('modal')
-    @include('dashboard')
+    @include('statistic')
     @include('table')
     @include('pagination')
 @endsection

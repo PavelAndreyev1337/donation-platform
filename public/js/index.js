@@ -3,7 +3,13 @@ $(() => {
     let headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
     }
-    let showPagination = (links) => {
+    let showStatistic = (topDonator, lastMonthAmount, allTimeAmount) => {
+        $("#allAmount > #number").text(allTimeAmount)
+        $("#topDonator > #number").text(topDonator.amount)
+        $("#topDonator > #email").text(topDonator.email)
+        $("#monthAmount > #number").text(lastMonthAmount)
+    }
+    let showPagination = links => {
         let paginator = $("#donationsPaginator")
         links.forEach(link => {
             let classes = link.active ? "active" : ""
@@ -43,6 +49,7 @@ $(() => {
                 </tr>`)
             })
             showPagination(resp.meta.links)
+            showStatistic(resp.topDonator, resp.lastMonthAmount, resp.allTimeAmount)
         })
     }
     showDonations(`${baseUrl}/donations?page=1`);

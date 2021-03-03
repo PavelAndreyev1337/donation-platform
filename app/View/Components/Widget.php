@@ -7,6 +7,13 @@ use Illuminate\View\Component;
 class Widget extends Component
 {
     /**
+     * Id
+     *
+     * @var string
+     */
+    public $id;
+
+    /**
      * Title
      *
      * @var string
@@ -35,8 +42,9 @@ class Widget extends Component
      * @param  string $email
      * @return void
      */
-    public function __construct(string $title, int $number, string $email = '')
+    public function __construct(string $id, string $title, int $number = 0, string $email = '')
     {
+        $this->id = $id;
         $this->title = $title;
         $this->number = $number;
         $this->email = $email;
