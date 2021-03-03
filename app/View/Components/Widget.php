@@ -28,11 +28,11 @@ class Widget extends Component
     public $number;
 
     /**
-     * Email
+     * Name
      *
      * @var string
      */
-    public $email;
+    public $name;
 
     /**
      * Create a new component instance.
@@ -42,12 +42,12 @@ class Widget extends Component
      * @param  string $email
      * @return void
      */
-    public function __construct(string $id, string $title, int $number = 0, string $email = '')
+    public function __construct(string $id, string $title, int $number = 0, string $name = '')
     {
         $this->id = $id;
         $this->title = $title;
         $this->number = $number;
-        $this->email = $email;
+        $this->name = $name;
     }
 
     /**
