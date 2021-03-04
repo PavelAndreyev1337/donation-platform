@@ -20,7 +20,8 @@ $(() => {
                 message: $("#inputMessage").val(),
             }
         }).done(() => {
-            $("#donationModal").modal("hide");
+            $("#donationModal").modal("hide")
+            console.log(storage)
         })
     })
     let showStatistic = (topDonator, dayAmount, monthAmount) => {
@@ -99,11 +100,4 @@ $(() => {
         })
     }
     sendRequest(`${baseUrl}/donations?page=1`)
-    Pusher.logToConsole = true
-    let pusher = new Pusher('539fdecc3410ebdc8726', {
-        cluster: 'eu'
-    })
-    let channel = pusher.subscribe('donations-channel');
-    channel.bind('donation-added', data => {
-    })
 })

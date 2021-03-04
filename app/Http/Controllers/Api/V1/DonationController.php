@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Events\DonationAdded;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDonationRequest;
 use App\Http\Resources\DonationCollection;
@@ -40,9 +39,7 @@ class DonationController extends Controller
      */
     public function store(StoreDonationRequest $request)
     {
-        $donation = Donation::create($request->only(['name', 'email', 'amount', 'message']));
-        DonationAdded::dispatch($donation);
-        return new DonationResource($donation);
+        return new DonationResource(Donation::create($request->only(['name', 'email', 'amount', 'message'])));
     }
 
     /**
