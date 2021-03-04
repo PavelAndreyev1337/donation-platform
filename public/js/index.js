@@ -20,7 +20,8 @@ $(() => {
                 message: $("#inputMessage").val(),
             }
         }).done(() => {
-            $("#donationModal").modal("hide");
+            $("#donationModal").modal("hide")
+            console.log(storage)
         })
     })
     let showStatistic = (topDonator, dayAmount, monthAmount) => {
@@ -84,18 +85,19 @@ $(() => {
             paginator.empty()
         })
     }
+    let storage = {}
     let sendRequest = url => {
         showDonationsLoader()
         $.ajax({
             url: url,
             method: "get"
         }).done(resp => {
+            storage = resp
             showStatistic(resp.topDonator, resp.dayAmount, resp.monthAmount)
             showChart(resp.chart)
             showDonations(resp.data)
             showPagination(resp.meta.links)
         })
     }
-    sendRequest(`${baseUrl}/donations?page=1`);
-
+    sendRequest(`${baseUrl}/donations?page=1`)
 })
