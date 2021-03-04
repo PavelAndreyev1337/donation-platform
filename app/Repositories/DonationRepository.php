@@ -1,40 +1,81 @@
 <?php
 
 use App\Contracts\RepositoryInterface;
-use App\Repositories;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class DonationRepositories implements RepositoryInterface
 {
+    /**
+     * Model
+     *
+     * @var Illuminate\Database\Eloquent\Model
+     */
     private $model;
 
+    /**
+     * DonationRepository constructor.
+     *
+     * @param  Illuminate\Database\Eloquent\Model $model
+     * @return void
+     */
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
 
-    public function all()
+    /**
+     * Get all donations.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function all(): Collection
     {
         return $this->model->all();
     }
 
-    public function create(array $data)
+    /**
+     * Create new donation.
+     *
+     * @param  array $data
+     * @return void
+     */
+    public function create(array $data): void
     {
         $this->model->create($data);
     }
 
-    public function update(array $data, $id)
+    /**
+     * Update donation.
+     *
+     * @param  array $data
+     * @param  int $id
+     * @return void
+     */
+    public function update(array $data, int $id): void
     {
         $this->model->find($id)->update($data);
     }
-    
-    public function delete($id)
+
+    /**
+     * Delete donation by id.
+     *
+     * @param  int $id
+     * @return void
+     */
+    public function delete(int $id): void
     {
         $this->model->destroy($id);
     }
 
-    public function show($id)
+    /**
+     * Show donation by id.
+     *
+     * @param  int $id
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function show(int $id): Model
     {
-        $this->model->findOrFail($id);
+        return $this->model->findOrFail($id);
     }
 }

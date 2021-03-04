@@ -2,15 +2,48 @@
 
 namespace App\Contracts;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
 interface RepositoryInterface
 {
-    public function all();
+    /**
+     * Get all entities
+     *
+     * @return Collection
+     */
+    public function all(): Collection;
 
-    public function create(array $data);
+    /**
+     * Create entity.
+     *
+     * @param  array $data
+     * @return void
+     */
+    public function create(array $data): void;
 
-    public function update(array $data, $id);
+    /**
+     * Update entity.
+     *
+     * @param  array $data
+     * @param  int $id
+     * @return void
+     */
+    public function update(array $data, int $id): void;
 
-    public function delete($id);
+    /**
+     * Delete entity by id.
+     *
+     * @param  int $id
+     * @return void
+     */
+    public function delete(int $id): void;
 
-    public function show($id);
+    /**
+     * Show entity by id.
+     *
+     * @param  int $id
+     * @return Model
+     */
+    public function show(int $id): Model;
 }
