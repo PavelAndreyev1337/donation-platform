@@ -18,8 +18,10 @@ Route::get("/", function () {
     return view("index");
 });
 
-Route::group(["prefix" => "/api/v1"], function () {
-    Route::resource("/donations", DonationController::class)->only([
+Route::group(["prefix" => "/api/v1/"], function () {
+    Route::get('donations/statistics', [DonationController::class, 'getStatistics']);
+    Route::get('donations/chart', [DonationController::class, 'getChartData']);
+    Route::resource("donations", DonationController::class)->only([
         "index", "store"
     ]);
 });
