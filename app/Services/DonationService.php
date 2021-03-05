@@ -48,7 +48,7 @@ class DonationService implements DonationServiceInterface
      */
     public function getChartData(): array
     {
-        return $this->repository->getAmountByDay();
+        return $this->repository->getAmountByDay()->chunk(1)->toArray();
     }
 
     /**

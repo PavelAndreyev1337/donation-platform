@@ -6,7 +6,6 @@ use App\Contracts\DonationServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDonationRequest;
 use App\Http\Resources\DonationResource;
-use Illuminate\Http\Request;
 
 class DonationController extends Controller
 {
@@ -20,21 +19,11 @@ class DonationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return App\Http\Resources\DonationCollection
+     * @return Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
         return $this->service->paginate(10);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -51,47 +40,22 @@ class DonationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get donations statistics.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function show($id)
+    public function getStatistics()
     {
-        //
+        return $this->service->getStatistics();
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Get data for chart.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function edit($id)
+    public function getChartData()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $this->service->getChartData();
     }
 }

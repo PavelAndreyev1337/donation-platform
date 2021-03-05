@@ -4,7 +4,7 @@ namespace App\Contracts;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Type\Decimal;
+use Illuminate\Support\Collection;
 
 interface DonationRepositoryInterface extends RepositoryInterface
 {
@@ -18,23 +18,23 @@ interface DonationRepositoryInterface extends RepositoryInterface
     /**
      * Get sum of donations per day.
      *
-     * @return Decimal
+     * @return float
      */
-    public function getDayAmount(): Decimal;
+    public function getDayAmount(): float;
 
     /**
      * Get sum of donations per month.
      *
-     * @return Decimal
+     * @return float
      */
-    public function getMonthAmount(): Decimal;
+    public function getMonthAmount(): float;
 
     /**
      * Get amount of donations by day.
      *
-     * @return array
+     * @return Illuminate\Support\Collection
      */
-    public function getAmountByDay(): array;
+    public function getAmountByDay(): Collection;
 
     /**
      * Paginate donations.

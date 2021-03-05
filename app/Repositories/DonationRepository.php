@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Type\Decimal;
+use Illuminate\Support\Collection as SupportCollection;
 
 class DonationRepository implements DonationRepositoryInterface
 {
@@ -98,9 +98,9 @@ class DonationRepository implements DonationRepositoryInterface
     /**
      * Get sum of donations per day.
      *
-     * @return Decimal
+     * @return float
      */
-    public function getDayAmount(): Decimal
+    public function getDayAmount(): float
     {
         return $this->model->whereDay('created_at', Carbon::now()->day)->sum('amount');
     }
@@ -108,9 +108,9 @@ class DonationRepository implements DonationRepositoryInterface
     /**
      * Get sum of donations per month.
      *
-     * @return Decimal
+     * @return float
      */
-    public function getMonthAmount(): Decimal
+    public function getMonthAmount(): float
     {
         return $this->model->whereMonth('created_at', Carbon::now()->month)->sum('amount');
     }
@@ -118,9 +118,9 @@ class DonationRepository implements DonationRepositoryInterface
     /**
      * Get amount of donations by day.
      *
-     * @return array
+     * @return Collection
      */
-    public function getAmountByDay(): array
+    public function getAmountByDay(): SupportCollection
     {
         return $this->model->select('created_at', 'amount')->get()->groupBy(function ($row) {
             return Carbon::parse($row->created_at)->format('d.m.Y');
