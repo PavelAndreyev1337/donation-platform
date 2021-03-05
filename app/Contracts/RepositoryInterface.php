@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 interface RepositoryInterface
 {
     /**
-     * Get all entities
+     * Get all entities.
      *
      * @return Collection
      */
@@ -18,9 +18,9 @@ interface RepositoryInterface
      * Create entity.
      *
      * @param  array $data
-     * @return void
+     * @return Model
      */
-    public function create(array $data): void;
+    public function create(array $data): Model;
 
     /**
      * Update entity.

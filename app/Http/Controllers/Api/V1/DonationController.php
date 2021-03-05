@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Contracts\DonationServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDonationRequest;
-use App\Http\Resources\DonationCollection;
 use App\Http\Resources\DonationResource;
-use App\Models\Donation;
 use Illuminate\Http\Request;
 
 class DonationController extends Controller
 {
+    private $service;
+
+    public function __construct(DonationServiceInterface $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +24,7 @@ class DonationController extends Controller
      */
     public function index()
     {
-        return new DonationCollection(Donation::orderByDesc('amount')->paginate(10));
+        return $this->service->paginate(10);
     }
 
     /**
@@ -39,7 +45,9 @@ class DonationController extends Controller
      */
     public function store(StoreDonationRequest $request)
     {
-        return new DonationResource(Donation::create($request->only(['name', 'email', 'amount', 'message'])));
+        return new DonationResource(
+            $this->service->addDonation($request->only(['name', 'email', 'amount', 'message']))
+        );
     }
 
     /**
