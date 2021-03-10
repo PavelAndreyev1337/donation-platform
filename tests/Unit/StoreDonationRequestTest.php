@@ -3,13 +3,14 @@
 namespace Tests\Unit;
 
 use App\Models\Donation;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response as HttpResponse;
 use Tests\TestCase;
 
 class StoreDonationRequestTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker, RefreshDatabase;
 
     /** @test */
     public function request_should_fail_when_no_name_is_provided()

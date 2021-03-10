@@ -56,22 +56,22 @@ class DonationRepository implements DonationRepositoryInterface
      *
      * @param  array $data
      * @param  int $id
-     * @return void
+     * @return bool
      */
-    public function update(array $data, int $id): void
+    public function update(array $data, int $id): bool
     {
-        $this->model->find($id)->update($data);
+        return $this->model->find($id)->update($data);
     }
 
     /**
      * Delete donation by id.
      *
      * @param  int $id
-     * @return void
+     * @return bool
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
-        $this->model->destroy($id);
+        return $this->model->destroy($id);
     }
 
     /**
