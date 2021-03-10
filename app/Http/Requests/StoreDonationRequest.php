@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\DonationAmount;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreDonationRequest extends FormRequest
@@ -26,7 +27,10 @@ class StoreDonationRequest extends FormRequest
         return [
             "name" => "required|min:1|max:100",
             "email" => "required|email",
-            "amount" => "required|min:0.01",
+            "amount" => [
+                "required",
+                new DonationAmount()
+            ],
             "message" => "nullable|max:200"
         ];
     }

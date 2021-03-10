@@ -25,7 +25,10 @@ class DonationAmount implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $value >= 0.01 && explode(".", $value)[1] <= 99;
+        $parts = explode(".", $value);
+        $partsCount = count($parts);
+        return $value >= 0.01
+            && ($partsCount == 1 || $partsCount == 2 && strlen($parts[1]) <= 2 && intval($parts[1]) <= 99);
     }
 
     /**
