@@ -19,8 +19,8 @@ Route::get("/", function () {
 });
 
 Route::group(["prefix" => "/api/v1/"], function () {
-    Route::get('donations/statistics', [DonationController::class, 'getStatistics']);
-    Route::get('donations/chart', [DonationController::class, 'getChartData']);
+    Route::get('donations/statistics', [DonationController::class, 'getStatistics'])->name('statistics');
+    Route::get('donations/chart', [DonationController::class, 'getChartData'])->name('chart');
     Route::resource("donations", DonationController::class)->only([
         "index", "store"
     ]);
