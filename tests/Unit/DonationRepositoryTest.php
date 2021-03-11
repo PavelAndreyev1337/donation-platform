@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Contracts\DonationRepositoryInterface;
 use App\Models\Donation;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -84,7 +83,7 @@ class DonationRepositoryTest extends TestCase
     /** @test */
     public function test_get_day_amount()
     {
-        $today = Carbon::now()->today();
+        $today = now()->today();
         $this->assertEquals(
             Donation::factory()->count(20)->create(
                 [
@@ -99,12 +98,11 @@ class DonationRepositoryTest extends TestCase
     /** @test */
     public function test_get_month_amount()
     {
-        $today = Carbon::now()->month();
         $this->assertEquals(
             Donation::factory()->count(20)->create(
                 [
-                    'created_at' => $today,
-                    'updated_at' => $today
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]
             )->sum('amount'),
             $this->repository->getMonthAmount()
