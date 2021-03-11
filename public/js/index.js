@@ -3,27 +3,6 @@ $(() => {
     let headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
     }
-    let donationForm = $("#donationForm")
-    donationForm.on("submit", event => {
-        event.preventDefault()
-        event.stopPropagation()
-        donationForm.addClass("was-validated")
-        $.ajax({
-            url: `${baseUrl}/donations`,
-            headers: headers,
-            method: "post",
-            dataType: "json",
-            data: {
-                name: $("#inputName").val(),
-                email: $("#inputEmail").val(),
-                amount: $("#inputAmount").val(),
-                message: $("#inputMessage").val(),
-            }
-        }).done(() => {
-            $("#donationModal").modal("hide")
-            console.log(storage)
-        })
-    })
     let showStatistic = (topDonator, dayAmount, monthAmount) => {
         $("#topDonator > #number").text(topDonator.amount)
         $("#topDonator > #name").text(topDonator.name)
@@ -32,8 +11,13 @@ $(() => {
     }
     let showChart = resp => {
         let drawChart = () => {
-            let values = [['Date', 'Amount',]].concat(Object.entries(resp))
-            let data = google.visualization.arrayToDataTable(values);
+            let values = [['Date', 'Amount',]]
+            resp.forEach(function (obj) {
+                Object.keys(obj).forEach(function (key) {
+                    values.push([key, obj[key]]);
+                });
+            });
+            let data = google.visualization.arrayToDataTable(values)
             let options = {
                 title: 'Donations Statistics',
                 legend: { position: 'bottom' }
@@ -57,19 +41,24 @@ $(() => {
     }
     let showDonations = (data) => {
         clearDonations()
-        data.forEach(donation => {
-            let date = new Date(donation.created_at).toLocaleDateString("uk-UK")
-            tableBody.append(`<tr>
-            <td>${donation.name}</td>
-            <td>${donation.email}</td>
-            <td>${donation.amount}</td>
-            <td>${donation.message}</td>
-            <td>${date}</td>
-            </tr>`)
-        })
+        if (data.length === 0) {
+            tableBody.append(`<tr><td class='text-center text-secondary' colspan='5'>There are no donations.</td></tr>`)
+        } else {
+            data.forEach(donation => {
+                let date = new Date(donation.created_at).toLocaleDateString("uk-UK")
+                tableBody.append(`<tr>
+                <td>${donation.name}</td>
+                <td>${donation.email}</td>
+                <td>${donation.amount}</td>
+                <td>${donation.message ?? '-'}</td>
+                <td>${date}</td>
+                </tr>`)
+            })
+        }
     }
     let showPagination = links => {
         let paginator = $("#donationsPaginator")
+        paginator.empty()
         links.forEach(link => {
             let classes = link.active ? "active" : ""
             classes += link.url ? "" : "disabled"
@@ -86,18 +75,51 @@ $(() => {
         })
     }
     let storage = {}
-    let sendRequest = url => {
+    let sendRequest = (url = `${baseUrl}/donations?page=1`) => {
         showDonationsLoader()
         $.ajax({
             url: url,
             method: "get"
         }).done(resp => {
             storage = resp
-            showStatistic(resp.topDonator, resp.dayAmount, resp.monthAmount)
-            showChart(resp.chart)
             showDonations(resp.data)
-            showPagination(resp.meta.links)
+            showPagination(resp.links)
+        })
+        $.ajax({
+            url: `${baseUrl}/donations/statistics`,
+            method: "get"
+        }).done(resp => {
+            storage['statistics'] = resp
+            showStatistic(resp.topDonator, resp.dayAmount, resp.monthAmount)
+        })
+        $.ajax({
+            url: `${baseUrl}/donations/chart`,
+            method: "get"
+        }).done(resp => {
+            storage['chart'] = resp
+            showChart(resp)
         })
     }
-    sendRequest(`${baseUrl}/donations?page=1`)
+    let donationForm = $("#donationForm")
+    donationForm.on("submit", event => {
+        event.preventDefault()
+        event.stopPropagation()
+        donationForm.addClass("was-validated")
+        $.ajax({
+            url: `${baseUrl}/donations`,
+            headers: headers,
+            method: "post",
+            dataType: "json",
+            data: {
+                name: $("#inputName").val(),
+                email: $("#inputEmail").val(),
+                amount: $("#inputAmount").val(),
+                message: $("#inputMessage").val(),
+            }
+        }).done(() => {
+            sendRequest();
+            $("#donationModal").modal("hide")
+        })
+    })
+    sendRequest()
 })

@@ -102,7 +102,7 @@ class DonationRepository implements DonationRepositoryInterface
      */
     public function getDayAmount(): float
     {
-        return $this->model->whereDay('created_at', Carbon::now()->today())->sum('amount');
+        return $this->model->whereDay('created_at', now()->today())->sum('amount');
     }
 
     /**
@@ -112,7 +112,7 @@ class DonationRepository implements DonationRepositoryInterface
      */
     public function getMonthAmount(): float
     {
-        return $this->model->whereMonth('created_at', Carbon::now()->month())->sum('amount');
+        return $this->model->whereMonth('created_at', now()->month)->sum('amount');
     }
 
     /**
