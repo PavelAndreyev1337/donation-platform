@@ -27,17 +27,17 @@ interface RepositoryInterface
      *
      * @param  array $data
      * @param  int $id
-     * @return void
+     * @return bool
      */
-    public function update(array $data, int $id): void;
+    public function update(array $data, int $id): bool;
 
     /**
      * Delete entity by id.
      *
      * @param  int $id
-     * @return void
+     * @return bool
      */
-    public function delete(int $id): void;
+    public function delete(int $id): bool;
 
     /**
      * Show entity by id.

@@ -56,22 +56,22 @@ class DonationRepository implements DonationRepositoryInterface
      *
      * @param  array $data
      * @param  int $id
-     * @return void
+     * @return bool
      */
-    public function update(array $data, int $id): void
+    public function update(array $data, int $id): bool
     {
-        $this->model->find($id)->update($data);
+        return $this->model->find($id)->update($data);
     }
 
     /**
      * Delete donation by id.
      *
      * @param  int $id
-     * @return void
+     * @return bool
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
-        $this->model->destroy($id);
+        return $this->model->destroy($id);
     }
 
     /**
@@ -102,7 +102,7 @@ class DonationRepository implements DonationRepositoryInterface
      */
     public function getDayAmount(): float
     {
-        return $this->model->whereDay('created_at', Carbon::now()->day)->sum('amount');
+        return $this->model->whereDay('created_at', Carbon::now()->today())->sum('amount');
     }
 
     /**
@@ -112,7 +112,7 @@ class DonationRepository implements DonationRepositoryInterface
      */
     public function getMonthAmount(): float
     {
-        return $this->model->whereMonth('created_at', Carbon::now()->month)->sum('amount');
+        return $this->model->whereMonth('created_at', Carbon::now()->month())->sum('amount');
     }
 
     /**
@@ -122,8 +122,8 @@ class DonationRepository implements DonationRepositoryInterface
      */
     public function getAmountByDay(): SupportCollection
     {
-        return $this->model->select('created_at', 'amount')->get()->groupBy(function ($row) {
-            return Carbon::parse($row->created_at)->format('d.m.Y');
+        return $this->model->get()->groupBy(function ($row) {
+            return $row->created_at->format('d.m.Y');
         })->map(function ($row) {
             return $row->sum('amount');
         });
