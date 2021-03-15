@@ -11,7 +11,7 @@ class DonationService implements DonationServiceInterface
 {
     /**
      * Repository.
-     * 
+     *
      * @var App\Contracts\DonationRepositoryInterface
      */
     private $repository;

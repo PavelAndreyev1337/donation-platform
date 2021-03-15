@@ -14,7 +14,7 @@ class DonationRepository implements DonationRepositoryInterface
 {
     /**
      * Model.
-     * 
+     *
      * @var Illuminate\Database\Eloquent\Model
      */
     private $model;
